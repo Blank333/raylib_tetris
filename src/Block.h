@@ -15,7 +15,16 @@ public:
 
   void Draw() { DrawRectangle(x, y, cellSize, cellSize, WHITE); }
 
-  void Update() { y += cellSize; }
+  void Update() { Bounds(); }
+  void Bounds() {
+    if (y >= cell_h * cellSize - cellSize) {
+      // NewBlock();
+    } else {
+      y += cellSize;
+    }
+  }
+  int getX() { return x; }
+  int getY() { return y; }
 
   void moveRight() { x += cellSize; }
   void moveLeft() { x -= cellSize; }
