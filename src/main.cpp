@@ -4,7 +4,7 @@
 using namespace std;
 
 const int cellSize = 32;
-const int cell_w = 12, cell_h = 24;
+const int cell_w = 10, cell_h = 20;
 const int width = cellSize * cell_w, height = cellSize * cell_h;
 const char *title = "Tetris";
 
