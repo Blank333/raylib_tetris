@@ -1,6 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
-#include "Block.h"
+#include "Blocks.cpp"
 #include "Grid.h"
 #include <raylib.h>
 
@@ -9,7 +9,7 @@ private:
   int cellSize, cell_w, cell_h;
   int center;
   double lastUpdate, speed;
-  Block block;
+  TBlock block;
   Grid grid;
 
   void Move();

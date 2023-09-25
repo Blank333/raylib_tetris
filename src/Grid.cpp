@@ -1,4 +1,5 @@
 #include "Grid.h"
+#include "Colors.h"
 
 Grid::Grid() {
   cell_w = 10;
@@ -14,11 +15,6 @@ void Grid::Initialize() {
       grid[row][col] = 0;
     }
   }
-}
-
-std::vector<Color> Grid::GetCellColors() {
-
-  return {LIGHTGRAY, GREEN, RED, ORANGE, YELLOW, PURPLE, SKYBLUE, BLUE};
 }
 
 void Grid::Draw() {

@@ -8,8 +8,6 @@ private:
   int cell_h, cell_w, cellSize;
   std::vector<Color> colors;
 
-  std::vector<Color> GetCellColors();
-
 public:
   int grid[20][10];
 

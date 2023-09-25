@@ -19,12 +19,15 @@ void Game::Update() {
   Move();
 }
 void Game::Move() {
-  if (IsKeyPressed(KEY_RIGHT) && block.getX() < cell_w * cellSize - cellSize) {
+  if (IsKeyPressed(KEY_RIGHT) && block.getX() <= cell_w * cellSize - cellSize) {
     block.moveRight();
-  } else if (IsKeyPressed(KEY_LEFT) && block.getX() >= cellSize) {
+
+  } else if (IsKeyPressed(KEY_LEFT)) {
     block.moveLeft();
   } else if (IsKeyPressed(KEY_DOWN)) {
     block.connect();
+  } else if (IsKeyPressed(KEY_UP)) {
+    block.rotate();
   }
 }
 
