@@ -20,16 +20,18 @@ public:
   int id;
   std::map<int, std::vector<Position>> cells;
 
+  Block();
   Block(int center, int cellSize, int cell_h, int cell_w);
   void Draw();
-  void Update();
-  int getX();
-  int getY();
   std::vector<Position> getTiles();
-  int rotate();
 
+  void rotate();
+  void unRotate();
+  void move(int row, int col);
   void moveRight();
   void moveLeft();
+  void moveDown();
+  void moveUp();
   void connect();
 };
 

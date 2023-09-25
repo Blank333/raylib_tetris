@@ -14,6 +14,7 @@ public:
   Grid();
   void Initialize();
   void Draw();
+  bool isCellOutside(int row, int col);
 };
 
 #endif
