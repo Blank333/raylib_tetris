@@ -1,5 +1,6 @@
 #ifndef UI_H
 #define UI_H
+#include "Block.h"
 #include <raylib.h>
 
 class UI {
@@ -9,7 +10,7 @@ private:
 public:
   UI(int cellSize, int cell_w, int cell_h, int speed, int padding,
      int interface);
-  void Draw();
+  void Draw(int score, Block nextBlock);
 };
 
 #endif

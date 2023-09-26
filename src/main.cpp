@@ -19,8 +19,7 @@ int main() {
   SetTargetFPS(165);
   HideCursor();
 
-  Game game(cellSize, cell_w, cell_h, speed, padding);
-  UI ui(cellSize, cell_w, cell_h, speed, padding, interface);
+  Game game(cellSize, cell_w, cell_h, speed, padding, interface);
   while (!WindowShouldClose()) {
     BeginDrawing();
     // Display FPS
@@ -28,7 +27,6 @@ int main() {
 
     game.Draw();
     game.Update();
-    ui.Draw();
 
     ClearBackground(DARKPURPLE);
     EndDrawing();
