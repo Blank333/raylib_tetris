@@ -20,7 +20,10 @@ public:
   Game(int cellSize, int cell_w, int cell_h, double speed);
   void Draw();
   void Update();
+  void moveBlock();
+  void LockBlock();
   bool isBlockOutside();
+  bool isBlockFit();
   Block GetRandomBlock();
   std::vector<Block> GetAllBlocks();
   void Cheats();

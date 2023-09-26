@@ -32,3 +32,42 @@ bool Grid::isCellOutside(int row, int col) {
     return false;
   return true;
 }
+bool Grid::isCellEmpty(int row, int col) {
+  if (grid[row][col] == 0) {
+    return true;
+  }
+  return false;
+}
+int Grid::ClearFullRows() {
+  int lines = 0;
+  for (int row = cell_h - 1; row >= 0; row--) {
+    if (isRowFull(row)) {
+      ClearRow(row);
+      lines++;
+    } else if (lines > 0) {
+      MoveRowDown(row, lines);
+    }
+  }
+  return lines;
+}
+
+bool Grid::isRowFull(int row) {
+  for (int col = 0; col < cell_w; col++) {
+    if (grid[row][col] == 0)
+      return false;
+  }
+  return true;
+}
+
+void Grid::ClearRow(int row) {
+  for (int col = 0; col < cell_w; col++) {
+    grid[row][col] == 0;
+  }
+}
+
+void Grid::MoveRowDown(int row, int steps) {
+  for (int col = 0; col < cell_w; col++) {
+    grid[row + steps][col] = grid[row][col];
+    grid[row][col] == 0;
+  }
+}

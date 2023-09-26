@@ -2,5 +2,5 @@
 
 std::vector<Color> GetCellColors() {
 
-  return {GRAY, GREEN, RED, ORANGE, YELLOW, PURPLE, SKYBLUE, BLUE};
+  return {DARKGRAY, GREEN, RED, ORANGE, YELLOW, PURPLE, SKYBLUE, BLUE};
 }

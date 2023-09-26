@@ -15,10 +15,6 @@ void Block::Draw() {
   for (Position item : tiles) {
     DrawRectangle(item.col * cellSize, item.row * cellSize, cellSize - 1,
                   cellSize - 1, colors[id]);
-    DrawRectangleLinesEx({(float)item.col * cellSize,
-                          (float)item.row * cellSize, (float)cellSize,
-                          (float)cellSize},
-                         2, WHITE);
   }
 }
 

@@ -17,7 +17,7 @@ void Game::Draw() {
 
 void Game::Update() {
   if (eventTriggered(speed)) {
-    activeBlock.move(1, 0);
+    moveBlock();
   }
   Move();
 
@@ -28,36 +28,60 @@ void Game::Move() {
   switch (key) {
   case KEY_RIGHT:
     activeBlock.moveRight();
-    if (isBlockOutside())
+    if (isBlockOutside() || !isBlockFit())
       activeBlock.moveLeft();
     break;
   case KEY_LEFT:
     activeBlock.moveLeft();
-    if (isBlockOutside())
+    if (isBlockOutside() || !isBlockFit())
       activeBlock.moveRight();
     break;
   case KEY_DOWN:
-    activeBlock.moveDown();
-    if (isBlockOutside())
-      activeBlock.moveUp();
+    moveBlock();
     break;
   case KEY_UP:
     activeBlock.rotate();
-    if (isBlockOutside())
+    if (isBlockOutside() || !isBlockFit())
       activeBlock.unRotate();
     break;
   case KEY_SPACE:
-    activeBlock = nextBlock;
-    nextBlock = GetRandomBlock();
+    moveBlock();
     break;
   }
+}
+
+void Game::moveBlock() {
+  activeBlock.moveDown();
+  if (isBlockOutside() || !isBlockFit()) {
+    activeBlock.moveUp();
+    LockBlock();
+  }
+}
+
+void Game::LockBlock() {
+  std::vector<Position> tiles = activeBlock.getTiles();
+  for (Position item : tiles) {
+    grid.grid[item.row][item.col] = activeBlock.id;
+  }
+  activeBlock = nextBlock;
+  nextBlock = GetRandomBlock();
+  grid.ClearFullRows();
+}
+
+bool Game::isBlockFit() {
+  std::vector<Position> tiles = activeBlock.getTiles();
+  for (Position item : tiles) {
+    if (!grid.isCellEmpty(item.row, item.col))
+      return false;
+  }
+  return true;
 }
 
 bool Game::isBlockOutside() {
   std::vector<Position> tiles = activeBlock.getTiles();
 
-  for (Position items : tiles) {
-    if (grid.isCellOutside(items.row, items.col))
+  for (Position item : tiles) {
+    if (grid.isCellOutside(item.row, item.col))
       return true;
   }
   return false;
