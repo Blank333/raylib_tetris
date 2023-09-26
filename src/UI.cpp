@@ -9,8 +9,8 @@ UI::UI(int cellSize, int cell_w, int cell_h, int speed, int padding,
 
 void UI::Draw(int score, Block nextBlock) {
   DrawText("SCORE", center, cellSize * 2, 30, WHITE);
-  DrawRectangleRounded({(float)center - 75, (float)cellSize * 3,
-                        (float)cellSize * 8, (float)cellSize},
+  DrawRectangleRounded({(float)center - 45, (float)cellSize * 3,
+                        (float)cellSize * 6, (float)cellSize},
                        0.5, 2, DARKGRAY);
   const char *scoreStr = TextFormat("%d", score);
   int scoreSize = MeasureText(scoreStr, 30);

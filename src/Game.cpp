@@ -12,6 +12,29 @@ Game::Game(int cellSize, int cell_w, int cell_h, double speed, int padding,
   lastUpdate = 0;
   running = true;
   score = 0;
+  totalLines = 0;
+  blockSpeed = 0.07;
+  InitAudioDevice();
+  music = LoadMusicStream("sounds/music.mp3");
+  rotateBlockSound = LoadSound("sounds/rotateBlock.wav");
+  placeBlockSound = LoadSound("sounds/placeBlock.wav");
+  moveBlockSound = LoadSound("sounds/moveBlock.wav");
+  clearLineSound = LoadSound("sounds/clearLine.wav");
+  tetrisSound = LoadSound("sounds/tetris.wav");
+  SetSoundPitch(tetrisSound, 1.5);
+  loseSound = LoadSound("sounds/lose.wav");
+  PlayMusicStream(music);
+}
+
+Game::~Game() {
+  UnloadMusicStream(music);
+  UnloadSound(rotateBlockSound);
+  UnloadSound(placeBlockSound);
+  UnloadSound(moveBlockSound);
+  UnloadSound(clearLineSound);
+  UnloadSound(tetrisSound);
+  UnloadSound(loseSound);
+  CloseAudioDevice();
 }
 
 void Game::Draw() {
@@ -34,7 +57,6 @@ void Game::Update() {
   if (eventTriggered(speed)) {
     moveBlock();
   }
-
   Move();
 
   Cheats();
@@ -43,38 +65,50 @@ void Game::Reset() {
   running = true;
   grid.Initialize();
   activeBlock = GetRandomBlock();
+  nextBlock = GetRandomBlock();
   score = 0;
+  speed = 0.5;
+  totalLines = 0;
+  PlayMusicStream(music);
 }
 void Game::Move() {
-  int key = GetKeyPressed();
-  switch (key) {
-  case KEY_RIGHT:
+
+  if (IsKeyDown(KEY_DOWN) && blockTriggered(blockSpeed)) {
+    moveBlock();
+    UpdateScore(0, 1);
+  }
+
+  if (IsKeyDown(KEY_RIGHT) && blockTriggered(blockSpeed)) {
     activeBlock.moveRight();
     if (isBlockOutside() || !isBlockFit())
       activeBlock.moveLeft();
-    break;
-  case KEY_LEFT:
+    else {
+      PlaySound(moveBlockSound);
+    }
+  }
+
+  if (IsKeyDown(KEY_LEFT) && blockTriggered(blockSpeed)) {
     activeBlock.moveLeft();
     if (isBlockOutside() || !isBlockFit())
       activeBlock.moveRight();
-    break;
-  case KEY_DOWN:
-    moveBlock();
-    UpdateScore(0, 1);
-    break;
-  case KEY_UP:
+    else {
+      PlaySound(moveBlockSound);
+    }
+  }
+
+  if (IsKeyPressed(KEY_UP)) {
     activeBlock.rotate();
+    PlaySound(rotateBlockSound);
     if (isBlockOutside() || !isBlockFit())
       activeBlock.unRotate();
-    break;
-  case KEY_SPACE:
+  }
+  if (IsKeyPressed(KEY_SPACE)) {
     moveBlock();
-
-    break;
   }
 }
 
 void Game::UpdateScore(int lines, int moves) {
+
   switch (lines) {
   case 1:
     score += 100;
@@ -105,13 +139,28 @@ void Game::LockBlock() {
   for (Position item : tiles) {
     grid.grid[item.row][item.col] = activeBlock.id;
   }
+  PlaySound(placeBlockSound);
   activeBlock = nextBlock;
   if (!isBlockFit()) {
+    PlaySound(loseSound);
+    StopMusicStream(music);
     running = false;
   }
   nextBlock = GetRandomBlock();
   int lines = grid.ClearFullRows();
+  if (lines >= 4) {
+    PlaySound(tetrisSound);
+    PlaySound(clearLineSound);
+  } else if (lines > 0) {
+    PlaySound(clearLineSound);
+  }
+  totalLines += lines;
   UpdateScore(lines, 0);
+
+  if (totalLines > 20 && speed > 0.1) {
+    speed -= 0.01;
+    totalLines = 0;
+  }
 }
 
 bool Game::isBlockFit() {
@@ -153,6 +202,14 @@ bool Game::eventTriggered(double interval) {
   double currentTime = GetTime();
   if (currentTime - lastUpdate >= interval) {
     lastUpdate = currentTime;
+    return true;
+  }
+  return false;
+}
+bool Game::blockTriggered(double interval) {
+  double currentTime = GetTime();
+  if (currentTime - blockUpdate >= interval) {
+    blockUpdate = currentTime;
     return true;
   }
   return false;

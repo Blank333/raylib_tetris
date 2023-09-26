@@ -12,7 +12,7 @@ const int width = cellSize * (interface + cell_w) + padding,
           height = cellSize * cell_h + 2 * padding;
 const char *title = "Tetris";
 
-double speed = 0.5;
+double speed = 0.4;
 
 int main() {
   InitWindow(width, height, title);
@@ -21,6 +21,7 @@ int main() {
 
   Game game(cellSize, cell_w, cell_h, speed, padding, interface);
   while (!WindowShouldClose()) {
+    UpdateMusicStream(game.music);
     BeginDrawing();
     // Display FPS
     SetWindowTitle(TextFormat("%s (%i)", title, GetFPS()));
@@ -28,7 +29,7 @@ int main() {
     game.Draw();
     game.Update();
 
-    ClearBackground(DARKPURPLE);
+    ClearBackground(DARKBLUE);
     EndDrawing();
   }
   CloseWindow();
