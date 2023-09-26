@@ -10,7 +10,7 @@
 
 class Block {
 private:
-  int cellSize, cell_h, cell_w;
+  int cellSize, cell_h, cell_w, padding;
   int x, y, rotation;
   std::vector<Color> colors;
 
@@ -21,7 +21,7 @@ public:
   std::map<int, std::vector<Position>> cells;
 
   Block();
-  Block(int center, int cellSize, int cell_h, int cell_w);
+  Block(int center, int cellSize, int cell_h, int cell_w, int padding);
   void Draw();
   std::vector<Position> getTiles();
 
@@ -32,7 +32,6 @@ public:
   void moveLeft();
   void moveDown();
   void moveUp();
-  void connect();
 };
 
 #endif

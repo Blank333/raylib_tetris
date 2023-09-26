@@ -1,7 +1,7 @@
 #include "Grid.h"
 #include "Colors.h"
 
-Grid::Grid() {
+Grid::Grid(int padding) : padding(padding) {
   cell_w = 10;
   cell_h = 20;
   cellSize = 32;
@@ -21,8 +21,12 @@ void Grid::Draw() {
   for (int row = 0; row < cell_h; row++) {
     for (int col = 0; col < cell_w; col++) {
       int cellVal = grid[row][col];
-      DrawRectangle(col * cellSize, row * cellSize, cellSize, cellSize,
-                    colors[cellVal]);
+      if (cellVal == 0)
+        DrawRectangle(col * cellSize + padding, row * cellSize + padding,
+                      cellSize, cellSize, colors[cellVal]);
+      else
+        DrawRectangle(col * cellSize + padding, row * cellSize + padding,
+                      cellSize - 1, cellSize - 1, colors[cellVal]);
     }
   }
 }

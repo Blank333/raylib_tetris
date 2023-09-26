@@ -5,7 +5,7 @@
 
 class Grid {
 private:
-  int cell_h, cell_w, cellSize;
+  int cell_h, cell_w, cellSize, padding;
   std::vector<Color> colors;
 
   bool isRowFull(int row);
@@ -15,7 +15,7 @@ private:
 public:
   int grid[20][10];
 
-  Grid();
+  Grid(int padding);
   void Initialize();
   void Draw();
   bool isCellOutside(int row, int col);

@@ -3,8 +3,8 @@
 
 class LBlock : public Block {
 public:
-  LBlock(int center, int cellSize, int cell_h, int cell_w)
-      : Block(center, cellSize, cell_h, cell_w) {
+  LBlock(int center, int cellSize, int cell_h, int cell_w, int padding)
+      : Block(center, cellSize, cell_h, cell_w, padding) {
     id = 1;
     cells[0] = {Position(0, 2), Position(1, 0), Position(1, 1), Position(1, 2)};
     cells[1] = {Position(0, 1), Position(1, 1), Position(2, 1), Position(2, 2)};
@@ -16,8 +16,8 @@ public:
 
 class JBlock : public Block {
 public:
-  JBlock(int center, int cellSize, int cell_h, int cell_w)
-      : Block(center, cellSize, cell_h, cell_w) {
+  JBlock(int center, int cellSize, int cell_h, int cell_w, int padding)
+      : Block(center, cellSize, cell_h, cell_w, padding) {
     id = 2;
     cells[0] = {Position(0, 0), Position(1, 0), Position(1, 1), Position(1, 2)};
     cells[1] = {Position(0, 1), Position(0, 2), Position(1, 1), Position(2, 1)};
@@ -29,8 +29,8 @@ public:
 
 class IBlock : public Block {
 public:
-  IBlock(int center, int cellSize, int cell_h, int cell_w)
-      : Block(center, cellSize, cell_h, cell_w) {
+  IBlock(int center, int cellSize, int cell_h, int cell_w, int padding)
+      : Block(center, cellSize, cell_h, cell_w, padding) {
     id = 3;
     cells[0] = {Position(1, 0), Position(1, 1), Position(1, 2), Position(1, 3)};
     cells[1] = {Position(0, 2), Position(1, 2), Position(2, 2), Position(3, 2)};
@@ -42,8 +42,8 @@ public:
 
 class OBlock : public Block {
 public:
-  OBlock(int center, int cellSize, int cell_h, int cell_w)
-      : Block(center, cellSize, cell_h, cell_w) {
+  OBlock(int center, int cellSize, int cell_h, int cell_w, int padding)
+      : Block(center, cellSize, cell_h, cell_w, padding) {
     id = 4;
     cells[0] = {Position(0, 0), Position(0, 1), Position(1, 0), Position(1, 1)};
     cells[1] = {Position(0, 0), Position(0, 1), Position(1, 0), Position(1, 1)};
@@ -55,8 +55,8 @@ public:
 
 class SBlock : public Block {
 public:
-  SBlock(int center, int cellSize, int cell_h, int cell_w)
-      : Block(center, cellSize, cell_h, cell_w) {
+  SBlock(int center, int cellSize, int cell_h, int cell_w, int padding)
+      : Block(center, cellSize, cell_h, cell_w, padding) {
     id = 5;
     cells[0] = {Position(0, 1), Position(0, 2), Position(1, 0), Position(1, 1)};
     cells[1] = {Position(0, 1), Position(1, 1), Position(1, 2), Position(2, 2)};
@@ -68,8 +68,8 @@ public:
 
 class TBlock : public Block {
 public:
-  TBlock(int center, int cellSize, int cell_h, int cell_w)
-      : Block(center, cellSize, cell_h, cell_w) {
+  TBlock(int center, int cellSize, int cell_h, int cell_w, int padding)
+      : Block(center, cellSize, cell_h, cell_w, padding) {
     id = 6;
     cells[0] = {Position(0, 1), Position(1, 0), Position(1, 1), Position(1, 2)};
     cells[1] = {Position(0, 1), Position(1, 1), Position(1, 2), Position(2, 1)};
@@ -81,8 +81,8 @@ public:
 
 class ZBlock : public Block {
 public:
-  ZBlock(int center, int cellSize, int cell_h, int cell_w)
-      : Block(center, cellSize, cell_h, cell_w) {
+  ZBlock(int center, int cellSize, int cell_h, int cell_w, int padding)
+      : Block(center, cellSize, cell_h, cell_w, padding) {
     id = 1;
     cells[0] = {Position(0, 0), Position(0, 1), Position(1, 1), Position(1, 2)};
     cells[1] = {Position(0, 2), Position(1, 1), Position(1, 2), Position(2, 1)};

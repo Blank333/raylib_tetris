@@ -1,13 +1,14 @@
 #include "Game.h"
 
-Game::Game(int cellSize, int cell_w, int cell_h, double speed)
+Game::Game(int cellSize, int cell_w, int cell_h, double speed, int padding)
     : cellSize(cellSize), cell_w(cell_w), cell_h(cell_h), center(cell_w / 2),
-      speed(speed) {
+      padding(padding), speed(speed), grid(padding) {
 
   blocks = GetAllBlocks();
   activeBlock = GetRandomBlock();
   nextBlock = GetRandomBlock();
   lastUpdate = 0;
+  running = true;
 }
 
 void Game::Draw() {
@@ -16,12 +17,27 @@ void Game::Draw() {
 }
 
 void Game::Update() {
+
+  if (!running) {
+    DrawText("GAME OVER\nPress R to Restart", center * cellSize - 50,
+             cellSize * cell_h / 2 - 50, 40, WHITE);
+    if (IsKeyPressed(KEY_R)) {
+      Reset();
+    }
+    return;
+  }
   if (eventTriggered(speed)) {
     moveBlock();
   }
+
   Move();
 
   Cheats();
+}
+void Game::Reset() {
+  running = true;
+  grid.Initialize();
+  activeBlock = GetRandomBlock();
 }
 void Game::Move() {
   int key = GetKeyPressed();
@@ -45,7 +61,6 @@ void Game::Move() {
       activeBlock.unRotate();
     break;
   case KEY_SPACE:
-    moveBlock();
     break;
   }
 }
@@ -64,6 +79,9 @@ void Game::LockBlock() {
     grid.grid[item.row][item.col] = activeBlock.id;
   }
   activeBlock = nextBlock;
+  if (!isBlockFit()) {
+    running = false;
+  }
   nextBlock = GetRandomBlock();
   grid.ClearFullRows();
 }
@@ -93,13 +111,13 @@ Block Game::GetRandomBlock() {
 
 std::vector<Block> Game::GetAllBlocks() {
   return {
-      LBlock(center, cellSize, cell_h, cell_w),
-      JBlock(center, cellSize, cell_h, cell_w),
-      IBlock(center, cellSize, cell_h, cell_w),
-      OBlock(center, cellSize, cell_h, cell_w),
-      SBlock(center, cellSize, cell_h, cell_w),
-      ZBlock(center, cellSize, cell_h, cell_w),
-      TBlock(center, cellSize, cell_h, cell_w),
+      LBlock(center, cellSize, cell_h, cell_w, padding),
+      JBlock(center, cellSize, cell_h, cell_w, padding),
+      IBlock(center, cellSize, cell_h, cell_w, padding),
+      OBlock(center, cellSize, cell_h, cell_w, padding),
+      SBlock(center, cellSize, cell_h, cell_w, padding),
+      ZBlock(center, cellSize, cell_h, cell_w, padding),
+      TBlock(center, cellSize, cell_h, cell_w, padding),
   };
 }
 

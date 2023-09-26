@@ -4,17 +4,17 @@ Block::Block() {
   colors = GetCellColors();
 }
 
-Block::Block(int center, int cellSize, int cell_h, int cell_w)
-    : cellSize(cellSize), x(0), y(0), cell_h(cell_h), cell_w(cell_w) {
-  rotation = 0;
+Block::Block(int center, int cellSize, int cell_h, int cell_w, int padding)
+    : cellSize(cellSize), cell_h(cell_h), cell_w(cell_w), padding(padding) {
+  x = y = rotation = 0;
   colors = GetCellColors();
 }
 
 void Block::Draw() {
   std::vector<Position> tiles = getTiles();
   for (Position item : tiles) {
-    DrawRectangle(item.col * cellSize, item.row * cellSize, cellSize - 1,
-                  cellSize - 1, colors[id]);
+    DrawRectangle(item.col * cellSize + padding, item.row * cellSize + padding,
+                  cellSize - 1, cellSize - 1, colors[id]);
   }
 }
 
@@ -49,5 +49,3 @@ void Block::moveRight() { move(0, 1); }
 void Block::moveLeft() { move(0, -1); }
 void Block::moveDown() { move(1, 0); }
 void Block::moveUp() { move(-1, 0); }
-
-void Block::connect() { y = cell_h - 3; }
