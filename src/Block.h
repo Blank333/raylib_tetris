@@ -13,8 +13,7 @@ private:
   int cellSize, cell_h, cell_w;
   int x, y, rotation;
   std::vector<Color> colors;
-
-  void Bounds();
+  std::vector<Color> colorsGhost;
 
 public:
   int id;
@@ -25,6 +24,7 @@ public:
   void Draw(int offsetX, int offsetY);
   std::vector<Position> getTiles();
 
+  void DrawGhost(int offsetX, int offsetY);
   void rotate();
   void unRotate();
   void move(int row, int col);

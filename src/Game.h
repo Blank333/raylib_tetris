@@ -16,8 +16,7 @@ private:
   bool running;
   int score, totalLines;
   UI ui;
-  void Move();
-  bool eventTriggered(double interval);
+
   Sound rotateBlockSound;
   Sound moveBlockSound;
   Sound placeBlockSound;
@@ -25,14 +24,9 @@ private:
   Sound loseSound;
   Sound tetrisSound;
 
-public:
-  Game(int cellSize, int cell_w, int cell_h, double speed, int padding,
-       int interface);
-  ~Game();
-  void Draw();
+  void Move();
+  bool eventTriggered(double interval);
   bool blockTriggered(double interval);
-  void Update();
-  void Reset();
   void moveBlock();
   void LockBlock();
   bool isBlockOutside();
@@ -40,9 +34,20 @@ public:
   Block GetRandomBlock();
   std::vector<Block> GetAllBlocks();
   void UpdateScore(int lines, int moves);
-  Music music;
+  int dropDistance(Position pos);
+  int dropBlock();
+  void hardDrop();
 
   void Cheats();
+
+public:
+  Game(int cellSize, int cell_w, int cell_h, double speed, int padding,
+       int interface);
+  ~Game();
+  void Draw();
+  void Update();
+  void Reset();
+  Music music;
 };
 
 #endif

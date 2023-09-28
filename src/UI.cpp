@@ -7,7 +7,7 @@ UI::UI(int cellSize, int cell_w, int cell_h, int speed, int padding,
   center = cell_w * cellSize + interface * cellSize / 2 - 40;
 }
 
-void UI::Draw(int score, Block nextBlock) {
+void UI::Draw(int score, Block nextBlock, Block ghostBlock, int offset) {
   DrawText("SCORE", center, cellSize * 2, 30, WHITE);
   DrawRectangleRounded({(float)center - 45, (float)cellSize * 3,
                         (float)cellSize * 6, (float)cellSize},
@@ -35,4 +35,6 @@ void UI::Draw(int score, Block nextBlock) {
     nextBlock.Draw(cell_w * cellSize + cellSize, cellSize * 8);
     break;
   }
+
+  ghostBlock.DrawGhost(padding, offset * cellSize + padding);
 }

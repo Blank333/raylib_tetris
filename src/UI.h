@@ -10,7 +10,7 @@ private:
 public:
   UI(int cellSize, int cell_w, int cell_h, int speed, int padding,
      int interface);
-  void Draw(int score, Block nextBlock);
+  void Draw(int score, Block nextBlock, Block ghostBlock, int offset);
 };
 
 #endif

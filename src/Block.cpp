@@ -8,6 +8,7 @@ Block::Block(int center, int cellSize, int cell_h, int cell_w)
     : cellSize(cellSize), cell_h(cell_h), cell_w(cell_w) {
   x = y = rotation = 0;
   colors = GetCellColors();
+  colorsGhost = GetGhostColors();
 }
 
 void Block::Draw(int offsetX, int offsetY) {
@@ -15,6 +16,14 @@ void Block::Draw(int offsetX, int offsetY) {
   for (Position item : tiles) {
     DrawRectangle(item.col * cellSize + offsetX, item.row * cellSize + offsetY,
                   cellSize - 1, cellSize - 1, colors[id]);
+  }
+}
+
+void Block::DrawGhost(int offsetX, int offsetY) {
+  std::vector<Position> tiles = getTiles();
+  for (Position item : tiles) {
+    DrawRectangle(item.col * cellSize + offsetX, item.row * cellSize + offsetY,
+                  cellSize - 1, cellSize - 1, colorsGhost[id]);
   }
 }
 

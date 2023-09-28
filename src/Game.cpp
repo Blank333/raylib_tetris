@@ -40,7 +40,7 @@ Game::~Game() {
 void Game::Draw() {
   grid.Draw();
   activeBlock.Draw(padding, padding);
-  ui.Draw(score, nextBlock);
+  ui.Draw(score, nextBlock, activeBlock, dropBlock());
 }
 
 void Game::Update() {
@@ -103,7 +103,7 @@ void Game::Move() {
       activeBlock.unRotate();
   }
   if (IsKeyPressed(KEY_SPACE)) {
-    moveBlock();
+    hardDrop();
   }
 }
 
@@ -148,15 +148,15 @@ void Game::LockBlock() {
   }
   nextBlock = GetRandomBlock();
   int lines = grid.ClearFullRows();
+  totalLines += lines;
+
   if (lines >= 4) {
     PlaySound(tetrisSound);
     PlaySound(clearLineSound);
   } else if (lines > 0) {
     PlaySound(clearLineSound);
+    UpdateScore(lines, 0);
   }
-  totalLines += lines;
-  UpdateScore(lines, 0);
-
   if (totalLines > 20 && speed > 0.1) {
     speed -= 0.01;
     totalLines = 0;
@@ -213,6 +213,30 @@ bool Game::blockTriggered(double interval) {
     return true;
   }
   return false;
+}
+
+int Game::dropDistance(Position pos) {
+  int drop = 0;
+  while (grid.isCellEmpty(pos.row + drop + 1, pos.col) &&
+         !grid.isCellOutside(pos.row + drop + 1, pos.col)) {
+    drop++;
+  }
+  return drop;
+}
+
+int Game::dropBlock() {
+  int drop = cell_h;
+  for (Position pos : activeBlock.getTiles()) {
+    drop = std::min(drop, dropDistance(pos));
+  }
+
+  return drop;
+}
+
+void Game::hardDrop() {
+  int drop = dropBlock();
+  activeBlock.move(drop, 0);
+  LockBlock();
 }
 
 void Game::Cheats() {
