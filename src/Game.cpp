@@ -99,9 +99,18 @@ void Game::Move() {
   if (IsKeyPressed(KEY_UP)) {
     activeBlock.rotate();
     PlaySound(rotateBlockSound);
+
     if (isBlockOutside() || !isBlockFit())
       activeBlock.unRotate();
   }
+  if (IsKeyPressed(KEY_Z)) {
+    activeBlock.unRotate();
+    PlaySound(rotateBlockSound);
+
+    if (isBlockOutside() || !isBlockFit())
+      activeBlock.rotate();
+  }
+
   if (IsKeyPressed(KEY_SPACE)) {
     hardDrop();
   }
@@ -123,7 +132,7 @@ void Game::UpdateScore(int lines, int moves) {
     score += 777;
     break;
   }
-  score++;
+  score += moves;
 }
 
 void Game::moveBlock() {
@@ -235,6 +244,7 @@ int Game::dropBlock() {
 
 void Game::hardDrop() {
   int drop = dropBlock();
+  UpdateScore(0, drop * 2);
   activeBlock.move(drop, 0);
   LockBlock();
 }
