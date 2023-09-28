@@ -10,10 +10,10 @@ private:
   int cellSize, cell_w, cell_h;
   int center, padding, interface;
   double lastUpdate, blockUpdate, speed, blockSpeed;
-  Block activeBlock, nextBlock;
+  Block activeBlock, nextBlock, holdBlock;
   std::vector<Block> blocks;
   Grid grid;
-  bool running;
+  bool running, isBlockHeld, canChangeBlock;
   int score, totalLines;
   UI ui;
 
@@ -32,11 +32,13 @@ private:
   bool isBlockOutside();
   bool isBlockFit();
   Block GetRandomBlock();
+  Block GetBlock(int id);
   std::vector<Block> GetAllBlocks();
   void UpdateScore(int lines, int moves);
   int dropDistance(Position pos);
   int dropBlock();
   void hardDrop();
+  void HoldBlock();
 
   void Cheats();
 

@@ -3,7 +3,7 @@
 
 Grid::Grid(int padding) : padding(padding) {
   cell_w = 10;
-  cell_h = 20;
+  cell_h = 22;
   cellSize = 32;
   Initialize();
   colors = GetCellColors();
@@ -18,14 +18,14 @@ void Grid::Initialize() {
 }
 
 void Grid::Draw() {
-  for (int row = 0; row < cell_h; row++) {
+  for (int row = 2; row < cell_h; row++) {
     for (int col = 0; col < cell_w; col++) {
       int cellVal = grid[row][col];
       if (cellVal == 0)
-        DrawRectangle(col * cellSize + padding, row * cellSize + padding,
+        DrawRectangle(col * cellSize + padding, (row - 2) * cellSize + padding,
                       cellSize, cellSize, colors[cellVal]);
       else
-        DrawRectangle(col * cellSize + padding, row * cellSize + padding,
+        DrawRectangle(col * cellSize + padding, (row - 2) * cellSize + padding,
                       cellSize - 1, cellSize - 1, colors[cellVal]);
     }
   }

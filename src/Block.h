@@ -10,7 +10,7 @@
 
 class Block {
 private:
-  int cellSize, cell_h, cell_w;
+  int cellSize, cell_h, cell_w, center;
   int x, y, rotation;
   std::vector<Color> colors;
   std::vector<Color> colorsGhost;

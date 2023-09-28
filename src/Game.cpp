@@ -9,6 +9,8 @@ Game::Game(int cellSize, int cell_w, int cell_h, double speed, int padding,
   blocks = GetAllBlocks();
   activeBlock = GetRandomBlock();
   nextBlock = GetRandomBlock();
+  isBlockHeld = false;
+  canChangeBlock = true;
   lastUpdate = 0;
   running = true;
   score = 0;
@@ -40,7 +42,7 @@ Game::~Game() {
 void Game::Draw() {
   grid.Draw();
   activeBlock.Draw(padding, padding);
-  ui.Draw(score, nextBlock, activeBlock, dropBlock());
+  ui.Draw(score, nextBlock, activeBlock, dropBlock(), holdBlock);
 }
 
 void Game::Update() {
@@ -69,6 +71,7 @@ void Game::Reset() {
   score = 0;
   speed = 0.5;
   totalLines = 0;
+  isBlockHeld = false;
   PlayMusicStream(music);
 }
 void Game::Move() {
@@ -114,8 +117,11 @@ void Game::Move() {
   if (IsKeyPressed(KEY_SPACE)) {
     hardDrop();
   }
-}
 
+  if (IsKeyPressed(KEY_C)) {
+    HoldBlock();
+  }
+}
 void Game::UpdateScore(int lines, int moves) {
 
   switch (lines) {
@@ -158,7 +164,7 @@ void Game::LockBlock() {
   nextBlock = GetRandomBlock();
   int lines = grid.ClearFullRows();
   totalLines += lines;
-
+  canChangeBlock = true;
   if (lines >= 4) {
     PlaySound(tetrisSound);
     PlaySound(clearLineSound);
@@ -170,6 +176,24 @@ void Game::LockBlock() {
     speed -= 0.01;
     totalLines = 0;
   }
+}
+
+void Game::HoldBlock() {
+  if (!canChangeBlock)
+    return;
+
+  if (isBlockHeld) {
+    int id;
+    id = activeBlock.id;
+    activeBlock = holdBlock;
+    holdBlock = GetBlock(id);
+  } else {
+    holdBlock = GetBlock(activeBlock.id);
+    activeBlock = nextBlock;
+    nextBlock = GetRandomBlock();
+    isBlockHeld = true;
+  }
+  canChangeBlock = false;
 }
 
 bool Game::isBlockFit() {
@@ -194,6 +218,7 @@ bool Game::isBlockOutside() {
 Block Game::GetRandomBlock() {
   return blocks[GetRandomValue(0, blocks.size() - 1)];
 }
+Block Game::GetBlock(int id) { return blocks[id - 1]; }
 
 std::vector<Block> Game::GetAllBlocks() {
   return {
@@ -250,10 +275,10 @@ void Game::hardDrop() {
 }
 
 void Game::Cheats() {
-  if (IsKeyPressed(KEY_C)) {
+  if (IsKeyPressed(KEY_I)) {
     activeBlock = GetRandomBlock();
   }
-  if (IsKeyDown(KEY_V)) {
+  if (IsKeyDown(KEY_O)) {
     score += 100;
   }
 }

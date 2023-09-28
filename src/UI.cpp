@@ -7,7 +7,8 @@ UI::UI(int cellSize, int cell_w, int cell_h, int speed, int padding,
   center = cell_w * cellSize + interface * cellSize / 2 - 40;
 }
 
-void UI::Draw(int score, Block nextBlock, Block ghostBlock, int offset) {
+void UI::Draw(int score, Block nextBlock, Block ghostBlock, int offset,
+              Block holdBlock) {
   DrawText("SCORE", center, cellSize * 2, 30, WHITE);
   DrawRectangleRounded({(float)center - 45, (float)cellSize * 3,
                         (float)cellSize * 6, (float)cellSize},
@@ -26,13 +27,31 @@ void UI::Draw(int score, Block nextBlock, Block ghostBlock, int offset) {
   switch (nextBlock.id) {
   case 3:
     nextBlock.Draw(cell_w * cellSize + cellSize / 2,
-                   cellSize * 8 + cellSize / 2);
+                   cellSize * 10 + cellSize / 2);
     break;
   case 4:
-    nextBlock.Draw(cell_w * cellSize + cellSize / 2, cellSize * 8);
+    nextBlock.Draw(cell_w * cellSize + cellSize / 2, cellSize * 10);
     break;
   default:
-    nextBlock.Draw(cell_w * cellSize + cellSize, cellSize * 8);
+    nextBlock.Draw(cell_w * cellSize + cellSize, cellSize * 10);
+    break;
+  }
+
+  DrawText("HOLD BLOCK", center - 50, cellSize * 12, 30, WHITE);
+  DrawRectangleRounded({(float)center - 75, (float)cellSize * 13,
+                        (float)cellSize * 8, (float)cellSize * 4},
+                       0.5, 2, DARKGRAY);
+
+  switch (holdBlock.id) {
+  case 3:
+    holdBlock.Draw(cell_w * cellSize + cellSize / 2,
+                   cellSize * 16 + cellSize / 2);
+    break;
+  case 4:
+    holdBlock.Draw(cell_w * cellSize + cellSize / 2, cellSize * 16);
+    break;
+  default:
+    holdBlock.Draw(cell_w * cellSize + cellSize, cellSize * 16);
     break;
   }
 

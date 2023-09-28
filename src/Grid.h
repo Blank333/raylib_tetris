@@ -13,7 +13,7 @@ private:
   void MoveRowDown(int row, int steps);
 
 public:
-  int grid[20][10];
+  int grid[22][10];
 
   Grid(int padding);
   void Initialize();
