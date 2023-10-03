@@ -9,7 +9,8 @@ This is a Tetris clone implemented in C++ using the Raylib library.
 - **Left/Right/Down Arrow Keys:** Move Block
 - **Spacebar:** Hard Drop
 - **C:** Hold Block
-
+- **R:** Restart Game
+- 
 ## Cheats
 
 - **I**: Change Block
