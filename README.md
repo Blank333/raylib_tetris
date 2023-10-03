@@ -10,7 +10,7 @@ This is a Tetris clone implemented in C++ using the Raylib library.
 - **Spacebar:** Hard Drop
 - **C:** Hold Block
 - **R:** Restart Game
-- 
+  
 ## Cheats
 
 - **I**: Change Block
