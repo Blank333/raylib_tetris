@@ -72,6 +72,7 @@ void Game::Reset() {
   speed = 0.5;
   totalLines = 0;
   isBlockHeld = false;
+  canChangeBlock = true;
   PlayMusicStream(music);
 }
 void Game::Move() {
